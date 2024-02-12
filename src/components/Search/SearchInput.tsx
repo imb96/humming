@@ -15,12 +15,12 @@ const SearchInput = () => {
     event.preventDefault();
 
     const res = await getMusic({
-      method: "track.search",
-      track: input,
+      method: "album.search",
+      album: input,
     });
 
-    if (res.results.trackmatches) {
-      setSongsAtomValue(res.results.trackmatches.track);
+    if (res.results.albummatches) {
+      setSongsAtomValue(res.results.albummatches.album);
     }
   };
 

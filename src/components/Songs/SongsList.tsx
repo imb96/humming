@@ -23,6 +23,7 @@ const SongsList = () => {
     <>
       <div className="flex flex-col justify-center w-[400px] text-sm border-orange-400 border-[2px] rounded-lg p-[8px]">
         {songs
+          .filter((song) => song.name !== "(null)")
           .slice(count - 10, count)
           .sort((a, b) => Number(b.listeners) - Number(a.listeners))
           .map((song, i) => (

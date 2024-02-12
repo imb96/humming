@@ -3,12 +3,11 @@ import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 
 import { songsAtom } from "@/store/songs";
+import Image from "next/image";
 
 const SongsList = () => {
   const [songs] = useAtom(songsAtom);
   const [count, setCount] = useState(10);
-
-  console.log(songs);
 
   useEffect(() => {
     if (songs.length >= 1) {
@@ -29,8 +28,20 @@ const SongsList = () => {
               key={song.mbid ? song.mbid : Math.random() * 100 * i}
               className="p-2 flex flex-row justify-between"
             >
-              <div className="overflow-hidden whitespace-nowrap overflow-ellipsis">
-                {song.name}
+              <div className="flex flex-row gap-2 items-center">
+                <Image
+                  src={
+                    song.image[0]["#text"]
+                      ? song.image[0]["#text"]
+                      : "https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png"
+                  }
+                  alt="album image"
+                  width={32}
+                  height={32}
+                />
+                <div className="overflow-hidden whitespace-nowrap overflow-ellipsis">
+                  {song.name}
+                </div>
               </div>
               <div className="text-[10px] overflow-hidden whitespace-nowrap overflow-ellipsis">
                 {song.artist}

@@ -1,12 +1,12 @@
-import { BASE_URL } from "./baseUrl";
+import { BASE_URL_LAST } from "./baseUrl";
 
-interface Params {
+interface GetMusicParams {
   method: string;
   album: string;
 }
 
-const getMusic = async (params: Params) => {
-  const url = `${BASE_URL}&method=${params.method}&album=${params.album}`;
+const getMusic = async (params: GetMusicParams) => {
+  const url = `${BASE_URL_LAST}&method=${params.method}&album=${params.album}`;
 
   const res = await fetch(url, {
     method: "GET",

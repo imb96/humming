@@ -1,11 +1,11 @@
 import { BASE_URL_LAST } from './baseUrl'
 
-interface GetMusicParams {
+interface GetAlbumParams {
   method: string
   album: string
 }
 
-const getMusic = async (params: GetMusicParams) => {
+const getAlbum = async (params: GetAlbumParams) => {
   const url = `${BASE_URL_LAST}&method=${params.method}&album=${params.album}`
 
   const res = await fetch(url, {
@@ -16,11 +16,11 @@ const getMusic = async (params: GetMusicParams) => {
   })
 
   if (!res.ok) {
-    throw new Error('[getMusic] api Failed to fetch data')
+    throw new Error('[getAlbum] api Failed to fetch data')
   }
 
   const data = await res.json()
   return data
 }
 
-export default getMusic
+export default getAlbum

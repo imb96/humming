@@ -6,7 +6,7 @@ interface SongsPaginationProps {
 
 const SongsPagination = ({ count, setCount, length }: SongsPaginationProps) => {
   return (
-    <div className="flex gap-2 pb-5">
+    <div className="flex justify-center gap-2 pb-5">
       <button
         onClick={() => setCount((prev) => prev - 10)}
         disabled={count === 10}

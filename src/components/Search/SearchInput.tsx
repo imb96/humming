@@ -1,34 +1,29 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { songsAtom } from '@/store/songs'
-import { useSetAtom } from 'jotai'
-import getMusic from '@/api/getMusic'
-import SearchButton from './SearchButton'
-import getTopMusic from '@/api/getTopMusic'
 
-interface Track {
-  image: string
-  listeners: string
-  name: string
-  streamable: string
-  url: string
-  mbid: string
-  artist: {
-    name: string
-  }
-}
+import { useSetAtom } from 'jotai'
+
+import getAlbum from '@/api/getAlbum'
+import getTopMusic from '@/api/getTopMusic'
+import getTrack from '@/api/getTrack'
+import { songsAtom, topTracksAtom, tracksAtom } from '@/stores/songsAtom'
+import { TopTracks } from '@/types/track'
+
+import SearchButton from './SearchButton'
 
 const SearchInput = () => {
   const [input, setInput] = useState('')
 
-  const setSongsAtomValue = useSetAtom(songsAtom)
+  const setTopTracksAtom = useSetAtom(topTracksAtom)
+  const setAlbumsAtomValue = useSetAtom(songsAtom)
+  const setTracksAtom = useSetAtom(tracksAtom)
 
   useEffect(() => {
     ;(async () => {
       const res = await getTopMusic()
       if (res.tracks.track) {
-        const topSongs = res.tracks.track.map((track: Track) => {
+        const topTracks = res.tracks.track.map((track: TopTracks) => {
           return {
             image: track.image,
             listeners: track.listeners,
@@ -39,23 +34,30 @@ const SearchInput = () => {
             artist: track.artist.name,
           }
         })
-        console.log(topSongs)
-        setSongsAtomValue(topSongs)
+        setTopTracksAtom(topTracks)
       }
     })()
-  }, [setSongsAtomValue])
+  }, [setTopTracksAtom])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    const res = await getMusic({
+    const res = await getAlbum({
       method: 'album.search',
       album: input,
     })
 
+    const res2 = await getTrack({
+      method: 'track.search',
+      track: input,
+    })
+
     if (res.results.albummatches) {
-      console.log(res.results.albummatches.album)
-      setSongsAtomValue(res.results.albummatches.album)
+      setAlbumsAtomValue(res.results.albummatches.album)
+    }
+
+    if (res2.results.trackmatches) {
+      setTracksAtom(res2.results.trackmatches.track)
     }
   }
 

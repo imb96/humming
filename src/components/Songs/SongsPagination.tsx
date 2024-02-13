@@ -1,7 +1,7 @@
 interface SongsPaginationProps {
-  count: number;
-  setCount: React.Dispatch<React.SetStateAction<number>>;
-  length: number;
+  count: number
+  setCount: React.Dispatch<React.SetStateAction<number>>
+  length: number
 }
 
 const SongsPagination = ({ count, setCount, length }: SongsPaginationProps) => {
@@ -12,7 +12,7 @@ const SongsPagination = ({ count, setCount, length }: SongsPaginationProps) => {
         disabled={count === 10}
         className="disabled:opacity-20"
       >
-        {"<"}
+        {'<'}
       </button>
       <div>
         {count / 10} / {Math.ceil(length / 10)}
@@ -22,10 +22,10 @@ const SongsPagination = ({ count, setCount, length }: SongsPaginationProps) => {
         disabled={count / 10 === Math.ceil(length / 10)}
         className="disabled:opacity-20"
       >
-        {">"}
+        {'>'}
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default SongsPagination;
+export default SongsPagination

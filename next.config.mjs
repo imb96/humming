@@ -3,12 +3,12 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "lastfm.freetls.fastly.net",
-        port: "",
+        protocol: 'https',
+        hostname: 'lastfm.freetls.fastly.net',
+        port: '',
       },
     ],
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig

@@ -1,29 +1,29 @@
-import Image from "next/image";
+import Image from 'next/image'
 
-import { Song } from "@/types/songs";
-import { useState } from "react";
+import { Song } from '@/types/songs'
+import { useState } from 'react'
 
-import getVideo from "@/api/getVideo";
+import getVideo from '@/api/getVideo'
 
 const SongCard = ({ song }: { song: Song }) => {
-  const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const [ytId, setYtId] = useState("");
+  const [isVideoOpen, setIsVideoOpen] = useState(false)
+  const [ytId, setYtId] = useState('')
 
   const iframeProps = {
-    id: "ytplayer",
-    type: "text/html",
-    width: "100%",
-    height: "200",
+    id: 'ytplayer',
+    type: 'text/html',
+    width: '100%',
+    height: '200',
     src: `https://www.youtube.com/embed/${ytId}`,
-    frameBorder: "0",
+    frameBorder: '0',
     allowFullScreen: true,
-  };
+  }
 
   const handleSongCardClick = async () => {
-    setIsVideoOpen(!isVideoOpen);
-    const res = await getVideo({ title: `${song.name} ${song.artist}` });
-    setYtId(res.items[0].id.videoId);
-  };
+    setIsVideoOpen(!isVideoOpen)
+    const res = await getVideo({ title: `${song.name} ${song.artist}` })
+    setYtId(res.items[0].id.videoId)
+  }
 
   return (
     <>
@@ -34,9 +34,9 @@ const SongCard = ({ song }: { song: Song }) => {
         <div className="flex flex-row gap-2 items-center">
           <Image
             src={
-              song.image[0]["#text"]
-                ? song.image[0]["#text"]
-                : "https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png"
+              song.image[0]['#text']
+                ? song.image[0]['#text']
+                : 'https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png'
             }
             alt="album image"
             width={32}
@@ -56,7 +56,7 @@ const SongCard = ({ song }: { song: Song }) => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default SongCard;
+export default SongCard

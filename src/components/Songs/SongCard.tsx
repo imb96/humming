@@ -1,11 +1,12 @@
-import Image from 'next/image'
-
-import { Song } from '@/types/songs'
 import { useState } from 'react'
 
-import getVideo from '@/api/getVideo'
+import Image from 'next/image'
 
-const SongCard = ({ song }: { song: Song }) => {
+import getVideo from '@/api/getVideo'
+import { Song } from '@/types/song'
+import { TopTracks } from '@/types/track'
+
+const SongCard = ({ song }: { song: Song | TopTracks }) => {
   const [isVideoOpen, setIsVideoOpen] = useState(false)
   const [ytId, setYtId] = useState('')
 
@@ -47,7 +48,7 @@ const SongCard = ({ song }: { song: Song }) => {
           </div>
         </div>
         <div className="text-[10px] overflow-hidden whitespace-nowrap overflow-ellipsis">
-          {song.artist}
+          {song.artist as string}
         </div>
       </div>
       {isVideoOpen && (

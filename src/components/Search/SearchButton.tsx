@@ -17,7 +17,7 @@ const SearchButton = ({ disabled }: { disabled: boolean }) => {
         </svg>
       </div>
     </button>
-  );
-};
+  )
+}
 
-export default SearchButton;
+export default SearchButton

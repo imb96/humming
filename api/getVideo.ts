@@ -1,25 +1,25 @@
-import { BASE_URL_YT } from "./baseUrl";
+import { BASE_URL_YT } from './baseUrl'
 
 interface GetVideoParams {
-  title: string;
+  title: string
 }
 
 const getVideo = async (params: GetVideoParams) => {
-  const url = `${BASE_URL_YT}&q=${params.title}`;
+  const url = `${BASE_URL_YT}&q=${params.title}`
 
   const res = await fetch(url, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-  });
+  })
 
   if (!res.ok) {
-    throw new Error("[getVideo] api Failed to fetch data");
+    throw new Error('[getVideo] api Failed to fetch data')
   }
 
-  const data = await res.json();
-  return data;
-};
+  const data = await res.json()
+  return data
+}
 
-export default getVideo;
+export default getVideo

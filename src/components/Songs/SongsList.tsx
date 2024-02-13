@@ -1,28 +1,29 @@
-"use client";
-import { useEffect, useState } from "react";
-import { useAtom } from "jotai";
+'use client'
+import { useEffect, useState } from 'react'
+import { useAtom } from 'jotai'
 
-import { songsAtom } from "@/store/songs";
+import { songsAtom } from '@/store/songs'
 
-import SongCard from "./SongCard";
-import SongsPagination from "./SongsPagination";
+import SongCard from './SongCard'
+import SongsPagination from './SongsPagination'
 
 const SongsList = () => {
-  const [songs] = useAtom(songsAtom);
-  const [count, setCount] = useState(10);
+  const [songs] = useAtom(songsAtom)
+  const [count, setCount] = useState(10)
 
   useEffect(() => {
     if (songs.length >= 1) {
-      setCount(count);
+      setCount(count)
     }
-  }, [count, songs.length]);
+  }, [count, songs.length])
 
-  if (songs[count - 10] === undefined) return null;
+  if (songs[count - 10] === undefined) return null
 
   return (
     <>
       <div className="flex flex-col justify-center w-[400px] text-sm border-orange-400 border-[2px] rounded-lg p-[8px]">
         {songs
+          .filter((song) => song.name !== '(null)')
           .slice(count - 10, count)
           .sort((a, b) => Number(b.listeners) - Number(a.listeners))
           .map((song, i) => (
@@ -38,7 +39,7 @@ const SongsList = () => {
         length={songs.length}
       />
     </>
-  );
-};
+  )
+}
 
-export default SongsList;
+export default SongsList

@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react'
 
 import Image from 'next/image'
@@ -6,7 +8,13 @@ import getVideo from '@/api/getVideo'
 import { Song } from '@/types/song'
 import { TopTracks } from '@/types/track'
 
-const SongCard = ({ song }: { song: Song | TopTracks }) => {
+const SongCard = ({
+  song,
+  rank,
+}: {
+  song: Song | TopTracks
+  rank?: number
+}) => {
   const [isVideoOpen, setIsVideoOpen] = useState(false)
   const [ytId, setYtId] = useState('')
 
@@ -33,16 +41,21 @@ const SongCard = ({ song }: { song: Song | TopTracks }) => {
         onClick={handleSongCardClick}
       >
         <div className="flex flex-row gap-2 items-center">
-          <Image
-            src={
-              song.image?.[0]['#text']
-                ? song.image[0]['#text']
-                : 'https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png'
-            }
-            alt="album image"
-            width={32}
-            height={32}
-          />
+          {rank ? (
+            rank
+          ) : (
+            <Image
+              src={
+                song.image?.[0]['#text']
+                  ? song.image[0]['#text']
+                  : 'https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png'
+              }
+              alt="album image"
+              width={32}
+              height={32}
+            />
+          )}
+
           <div className="overflow-hidden whitespace-nowrap overflow-ellipsis">
             {song.name}
           </div>

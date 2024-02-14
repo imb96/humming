@@ -9,6 +9,14 @@ const nextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: `http://api.musixmatch.com/ws/1.1/:path*`,
+      },
+    ]
+  },
 }
 
 export default nextConfig

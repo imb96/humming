@@ -18,7 +18,7 @@ export interface TopTracks {
   mbid: string
   url: string
   streamable: Streamable
-  artist: Artist
+  artist: Artist & string
   image: Image[]
 }
 

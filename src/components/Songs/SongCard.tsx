@@ -35,7 +35,7 @@ const SongCard = ({ song }: { song: Song | TopTracks }) => {
         <div className="flex flex-row gap-2 items-center">
           <Image
             src={
-              song.image[0]['#text']
+              song.image?.[0]['#text']
                 ? song.image[0]['#text']
                 : 'https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png'
             }

@@ -1,6 +1,6 @@
 const SearchButton = ({ disabled }: { disabled: boolean }) => {
   return (
-    <button type="submit" disabled={disabled}>
+    <button type="submit" disabled={disabled} className="cursor-pointer">
       <div className="w-[12px]">
         <svg
           clipRule="evenodd"

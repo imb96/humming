@@ -1,6 +1,8 @@
 import getTopMusic from '@/api/getTopMusic'
 import { TopTracks } from '@/types/track'
 
+import SongCard from './SongCard'
+
 const TopSongList = async () => {
   const res = await getTopMusic()
   const topTracks = res.tracks.track.map((track: TopTracks) => {
@@ -17,9 +19,10 @@ const TopSongList = async () => {
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="w-[500px] text-sm border-orange-400 border-[2px] rounded-lg p-[0 8px 8px 8px] h-[510px] overflow-auto">
-        <div className="flex sticky top-0 py-[8px] pl-[8px] font-semibold bg-orange-100">
-          {'Top Tracks 🚀'}
+      <div className="w-[500px] text-sm border-orange-400 border-[2px] rounded-lg p-[0 8px 8px 8px] h-[510px] overflow-auto scroll-smooth scrollbar-hide">
+        <div className="flex sticky top-0 py-[8px] pl-[8px] font-semibold bg-orange-100 items-center gap-2">
+          {'Top Track 50 🚀'}
+          <span className="text-xs font-light">Click to watch the video!</span>
         </div>
         {topTracks
           .filter((item: TopTracks) => item.name !== '(null)')
@@ -28,20 +31,11 @@ const TopSongList = async () => {
               Number(b.listeners) - Number(a.listeners),
           )
           .map((song: TopTracks, i: number) => (
-            <div
+            <SongCard
+              song={song}
               key={song.mbid ? song.mbid : Math.random() * 100 * i}
-              className="p-2 flex flex-row justify-between cursor-pointer hover:bg-gray-100 flex-1 overflow-hidden items-center"
-            >
-              <div className="flex flex-row gap-2 items-center">
-                <div>{i + 1}.</div>
-                <div className="overflow-hidden whitespace-nowrap overflow-ellipsis">
-                  {song.name}
-                </div>
-              </div>
-              <div className="text-[10px] overflow-hidden whitespace-nowrap overflow-ellipsis">
-                {song.artist}
-              </div>
-            </div>
+              rank={i + 1}
+            />
           ))}
       </div>
     </div>

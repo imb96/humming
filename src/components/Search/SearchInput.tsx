@@ -1,50 +1,29 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { useSetAtom } from 'jotai'
+import { useRouter } from 'next/navigation'
 
 import getAlbum from '@/api/getAlbum'
-import getTopMusic from '@/api/getTopMusic'
 import getTrack from '@/api/getTrack'
 import getTrackWithLyrics from '@/api/getTrackWithLyrics'
-import { songsAtom, topTracksAtom, tracksAtom } from '@/stores/songsAtom'
+import { songsAtom, tracksAtom } from '@/stores/songsAtom'
 import { Track } from '@/types/lyricsTrack'
-import { TopTracks } from '@/types/track'
 
 import SearchButton from './SearchButton'
 
 const SearchInput = () => {
   const [input, setInput] = useState('')
   const [searchType, setSearchType] = useState('song')
+  const router = useRouter()
 
-  const setTopTracksAtom = useSetAtom(topTracksAtom)
   const setAlbumsAtomValue = useSetAtom(songsAtom)
   const setTracksAtom = useSetAtom(tracksAtom)
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSearchType(event.target.value)
   }
-
-  useEffect(() => {
-    ;(async () => {
-      const res = await getTopMusic()
-      if (res.tracks.track) {
-        const topTracks = res.tracks.track.map((track: TopTracks) => {
-          return {
-            image: track.image,
-            listeners: track.listeners,
-            mbid: track.mbid,
-            name: track.name,
-            streamable: '',
-            url: track.url,
-            artist: track.artist.name,
-          }
-        })
-        setTopTracksAtom(topTracks)
-      }
-    })()
-  }, [setTopTracksAtom])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -67,6 +46,8 @@ const SearchInput = () => {
       if (tracks.results.trackmatches) {
         setTracksAtom(tracks.results.trackmatches.track)
       }
+
+      router.push('/search')
     }
 
     if (searchType === 'lyrics') {
@@ -96,7 +77,7 @@ const SearchInput = () => {
     <>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-row pl-2 justify-between w-full"
+        className="flex flex-row px-2 justify-between w-full"
       >
         <select
           value={searchType}

@@ -39,8 +39,12 @@ const SongsList = ({
               key={song.mbid ? song.mbid : Math.random() * 100 * i}
             />
           ))}
+        <SongsPagination
+          count={count}
+          setCount={setCount}
+          length={list.length}
+        />
       </div>
-      <SongsPagination count={count} setCount={setCount} length={list.length} />
     </div>
   )
 }

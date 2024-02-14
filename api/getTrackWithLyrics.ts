@@ -1,5 +1,5 @@
 const getTrackWithLyrics = async (lyrics: string) => {
-  const url = `api/track.search?page_size=10&page=5&s_track_rating=desc&apikey=9466dc0e080a511ceee8ab798a730645&country=82&q_lyrics=${lyrics}`
+  const url = `api/track.search?page_size=10&page=5&s_track_rating=desc&apikey=${process.env.NEXT_PUBLIC_MX_API_KEY}&country=82&q_lyrics=${lyrics}`
 
   const res = await fetch(url, {
     method: 'GET',

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import getTopTrackWithArtist from '@/api/getTopTrackWithArtist'
+import getTopTrackByArtist from '@/api/getTopTrackByArtist'
 import getVideo from '@/api/getVideo'
 import { Artist } from '@/types/artist'
 
@@ -22,7 +22,7 @@ const ArtistCard = ({ rank, artist }: { rank?: number; artist: Artist }) => {
 
   const handleArtistCardClick = async () => {
     setIsVideoOpen(!isVideoOpen)
-    const track = await getTopTrackWithArtist(artist.name)
+    const track = await getTopTrackByArtist(artist.name)
     const res = await getVideo({
       title: `${artist.name} ${track.toptracks.track[0].name}`,
     })

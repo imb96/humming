@@ -97,7 +97,7 @@ const SearchInput = ({
         <input
           type="text"
           placeholder="Search your humming..."
-          className="focus:outline-none text-xs w-[100%]"
+          className="focus:outline-none text-xs w-[100%] pl-5"
           autoFocus
           onChange={(e) => setInput(e.target.value)}
         />

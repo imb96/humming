@@ -83,6 +83,7 @@ const SearchInput = () => {
           value={searchType}
           onChange={handleSelectChange}
           className="text-xs"
+          aria-label="search-type"
         >
           <option value="song">제목/가수</option>
           <option value="lyrics">가사</option>

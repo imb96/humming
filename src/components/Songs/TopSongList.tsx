@@ -26,10 +26,6 @@ const TopSongList = async () => {
         </div>
         {topTracks
           .filter((item: TopTracks) => item.name !== '(null)')
-          .sort(
-            (a: TopTracks, b: TopTracks) =>
-              Number(b.listeners) - Number(a.listeners),
-          )
           .map((song: TopTracks, i: number) => (
             <SongCard
               song={song}

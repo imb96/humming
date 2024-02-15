@@ -61,7 +61,7 @@ const SongCard = ({
           </div>
         </div>
         <div className="text-[10px] overflow-hidden whitespace-nowrap overflow-ellipsis">
-          {song.artist as string}
+          {song.artist}
         </div>
       </div>
       {isVideoOpen && (

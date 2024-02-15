@@ -52,8 +52,6 @@ const SearchInput = ({
       if (tracks.results.trackmatches) {
         setTracksAtom(tracks.results.trackmatches.track)
       }
-
-      router.push('/search')
     }
 
     if (searchType === 'lyrics') {
@@ -77,6 +75,7 @@ const SearchInput = ({
         setAlbumsAtomValue([])
       }
     }
+    router.push('/search')
     setIsLoading(false)
   }
 

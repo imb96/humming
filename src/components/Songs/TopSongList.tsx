@@ -1,10 +1,10 @@
-import getTopMusic from '@/api/getTopMusic'
+import getChart from '@/api/getChart'
 import { TopTracks } from '@/types/track'
 
 import SongCard from './SongCard'
 
 const TopSongList = async () => {
-  const res = await getTopMusic()
+  const res = await getChart({ method: 'chart.gettoptracks' })
   const topTracks = res.tracks.track.map((track: TopTracks) => {
     return {
       image: track.image,

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 
 import { useSetAtom } from 'jotai'
+import { SetStateAction } from 'jotai/vanilla'
 import { useRouter } from 'next/navigation'
 
 import getAlbum from '@/api/getAlbum'
@@ -13,7 +14,11 @@ import { Track } from '@/types/lyricsTrack'
 
 import SearchButton from './SearchButton'
 
-const SearchInput = () => {
+const SearchInput = ({
+  setIsLoading,
+}: {
+  setIsLoading: React.Dispatch<SetStateAction<boolean>>
+}) => {
   const [input, setInput] = useState('')
   const [searchType, setSearchType] = useState('song')
   const router = useRouter()
@@ -27,6 +32,7 @@ const SearchInput = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setIsLoading(true)
 
     if (searchType === 'song') {
       const albums = await getAlbum({
@@ -71,6 +77,7 @@ const SearchInput = () => {
         setAlbumsAtomValue([])
       }
     }
+    setIsLoading(false)
   }
 
   return (
@@ -83,6 +90,7 @@ const SearchInput = () => {
           value={searchType}
           onChange={handleSelectChange}
           className="text-xs"
+          aria-label="search-type"
         >
           <option value="song">제목/가수</option>
           <option value="lyrics">가사</option>

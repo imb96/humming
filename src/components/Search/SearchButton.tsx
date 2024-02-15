@@ -1,6 +1,11 @@
 const SearchButton = ({ disabled }: { disabled: boolean }) => {
   return (
-    <button type="submit" disabled={disabled} className="cursor-pointer">
+    <button
+      type="submit"
+      disabled={disabled}
+      className="cursor-pointer"
+      aria-label="search"
+    >
       <div className="w-[12px]">
         <svg
           clipRule="evenodd"

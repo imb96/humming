@@ -9,7 +9,7 @@ import { songsAtom, tracksAtom } from '@/stores/songsAtom'
 
 import SongsList from '../Songs/SongsList'
 
-const Main = () => {
+const SearchResult = () => {
   const [songs] = useAtom(songsAtom)
   const [tracks] = useAtom(tracksAtom)
   const router = useRouter()
@@ -30,4 +30,4 @@ const Main = () => {
   )
 }
 
-export default Main
+export default SearchResult

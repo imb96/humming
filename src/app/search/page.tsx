@@ -1,9 +1,9 @@
-import Main from '@/components/Main'
+import SearchResult from '@/components/SearchResult'
 
-export default function SearchResult() {
+export default function Search() {
   return (
     <>
-      <Main />
+      <SearchResult />
     </>
   )
 }

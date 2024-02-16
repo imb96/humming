@@ -1,10 +1,10 @@
-import getTopArtist from '@/api/getTopArtist'
+import getChart from '@/api/getChart'
 import { Artist } from '@/types/artist'
 
 import ArtistCard from './ArtistCard'
 
 const TopArtistList = async () => {
-  const res = await getTopArtist()
+  const res = await getChart({ method: 'chart.gettopartists' })
   const topArtists = res.artists.artist.map((artist: Artist) => {
     return {
       image: artist.image,

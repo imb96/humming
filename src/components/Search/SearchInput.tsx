@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 
 import getAlbum from '@/api/getAlbum'
 import getTrack from '@/api/getTrack'
-import getTrackWithLyrics from '@/api/getTrackWithLyrics'
+import getTrackByLyrics from '@/api/getTrackByLyrics'
 import { songsAtom, tracksAtom } from '@/stores/songsAtom'
 import { Track } from '@/types/lyricsTrack'
 
@@ -55,7 +55,7 @@ const SearchInput = ({
     }
 
     if (searchType === 'lyrics') {
-      const song = await getTrackWithLyrics(input)
+      const song = await getTrackByLyrics(input)
 
       if (song.message.body.track_list.length > 0) {
         const tracksWithLyric = song.message.body.track_list.map(
@@ -97,7 +97,7 @@ const SearchInput = ({
         <input
           type="text"
           placeholder="Search your humming..."
-          className="focus:outline-none text-xs w-[100%]"
+          className="focus:outline-none text-xs w-[100%] pl-5"
           autoFocus
           onChange={(e) => setInput(e.target.value)}
         />

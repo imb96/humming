@@ -15,7 +15,7 @@ const Profile = ({ profileImage }: ProfileProps) => {
   const user = useAtom(userAtom)
 
   const handleProfileClick = () => {
-    if (user[0]?.user.uid === undefined) {
+    if (!user[0]?.user.uid) {
       router.push('/signin')
     } else {
       router.push(`/user/${user[0]?.user.uid}`)

@@ -2,11 +2,18 @@
 
 import { useState } from 'react'
 
+import { useSetAtom } from 'jotai'
+import { useRouter } from 'next/navigation'
+
 import { authSignIn } from '@/firebase'
+import { userAtom } from '@/stores/userAtom'
+import { UserRoot } from '@/types/user'
 
 const SignIn = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const setUserAtom = useSetAtom(userAtom)
+  const router = useRouter()
 
   const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value)
@@ -18,6 +25,13 @@ const SignIn = () => {
 
   const handleSignIn = () => {
     authSignIn({ email, password })
+      .then((user) => {
+        setUserAtom(user as unknown as UserRoot)
+        router.push('/')
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   return (

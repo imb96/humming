@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
-import Search from '@/components/Search'
+import Header from '@/components/Header'
 
 import './globals.css'
 
@@ -20,8 +20,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="flex min-h-screen flex-col items-center pt-12 gap-5">
-          <Search />
+        <main className="flex min-h-screen flex-col items-center gap-5">
+          <Header />
           <div className="flex justify-start">{children}</div>
         </main>
       </body>

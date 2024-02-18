@@ -1,5 +1,6 @@
+import { UserCredential } from 'firebase/auth'
 import { atom } from 'jotai'
+import { atomWithStorage } from 'jotai/utils'
 
-import { UserRoot } from '@/types/user'
-
-export const userAtom = atom<UserRoot | null>(null)
+export const userAtom = atom<UserCredential | null>(null)
+export const userTokenAtom = atomWithStorage('userToken', '')

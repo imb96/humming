@@ -1,25 +1,23 @@
 'use client'
 
-import { useSetAtom } from 'jotai'
+import { useAtom, useSetAtom } from 'jotai'
 import { useRouter } from 'next/navigation'
 
 import { authSignOut } from '@/firebase'
-import { userAtom } from '@/stores/userAtom'
-import { UserRoot } from '@/types/user'
+import { userAtom, userTokenAtom } from '@/stores/userAtom'
 
 const SignOut = () => {
   const router = useRouter()
   const setUserAtom = useSetAtom(userAtom)
 
+  const [token, setToken] = useAtom(userTokenAtom)
+
   const handleSignOut = () => {
     authSignOut()
       .then(() => {
         router.push('/')
-        setUserAtom({
-          user: {
-            uid: null,
-          },
-        } as unknown as UserRoot)
+        setUserAtom(null)
+        setToken('')
       })
       .catch((error) => {
         console.log(error)

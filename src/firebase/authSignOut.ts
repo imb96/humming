@@ -2,15 +2,15 @@ import { getAuth, signOut } from 'firebase/auth'
 
 import { app } from '@/firebase'
 
-const SignOut = () => {
+const autoSignOut = () => {
   const auth = getAuth(app)
-  signOut(auth)
-    .then(() => {
-      console.log('sign out success')
-    })
-    .catch((error) => {
-      console.log('sign out error', error)
-    })
+
+  try {
+    const user = signOut(auth)
+    return user
+  } catch (error) {
+    throw new Error('[authSignOut] Error')
+  }
 }
 
-export default SignOut
+export default autoSignOut

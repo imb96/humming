@@ -1,9 +1,14 @@
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
 
 import { app } from '@/firebase'
-import { UserAuth } from '@/types/user'
 
-const authSignUp = async ({ email, password }: UserAuth) => {
+const authSignUp = async ({
+  email,
+  password,
+}: {
+  email: string
+  password: string
+}) => {
   const auth = getAuth(app)
 
   try {

@@ -2,23 +2,15 @@
 
 import { useState } from 'react'
 
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { useAtom, useSetAtom } from 'jotai'
 import { useRouter } from 'next/navigation'
 
-import { app, authSignUp } from '@/firebase'
-import { userAtom, userTokenAtom } from '@/stores/userAtom'
+import { authSignUp } from '@/firebase'
 
 const SignUp = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [token, setToken] = useAtom(userTokenAtom)
-
-  const setUserAtom = useSetAtom(userAtom)
 
   const router = useRouter()
-
-  const auth = getAuth(app)
 
   const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value)
@@ -30,14 +22,7 @@ const SignUp = () => {
 
   const handleSignUp = () => {
     authSignUp({ email, password })
-      .then((res) => {
-        setUserAtom(res)
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            const uid = user.uid
-            setToken(uid)
-          }
-        })
+      .then(() => {
         router.push('/')
       })
       .catch((error) => {

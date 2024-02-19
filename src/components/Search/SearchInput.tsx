@@ -56,24 +56,21 @@ const SearchInput = ({
 
     if (searchType === 'lyrics') {
       const song = await getTrackByLyrics(input)
-
-      if (song.message.body.track_list.length > 0) {
-        const tracksWithLyric = song.message.body.track_list.map(
-          ({ track }: { track: Track }) => {
-            return {
-              image: [{ size: '', '#test': '' }],
-              listeners: '',
-              mbid: track.commontrack_id,
-              name: track.track_name,
-              streamable: '',
-              url: '',
-              artist: track.artist_name,
-            }
-          },
-        )
-        setTracksAtom(tracksWithLyric)
-        setAlbumsAtomValue([])
-      }
+      const tracksWithLyric = song.message.body.track_list.map(
+        ({ track }: { track: Track }) => {
+          return {
+            image: [{ size: '', '#test': '' }],
+            listeners: '',
+            mbid: track.commontrack_id,
+            name: track.track_name,
+            streamable: '',
+            url: '',
+            artist: track.artist_name,
+          }
+        },
+      )
+      setTracksAtom(tracksWithLyric)
+      setAlbumsAtomValue([])
     }
     router.push('/search')
     setIsLoading(false)

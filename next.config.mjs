@@ -15,6 +15,10 @@ const nextConfig = {
         source: '/api/:path*',
         destination: `http://api.musixmatch.com/ws/1.1/:path*`,
       },
+      {
+        source: '/user/api/:path*',
+        destination: `http://api.musixmatch.com/ws/1.1/:path*`,
+      },
     ]
   },
 }

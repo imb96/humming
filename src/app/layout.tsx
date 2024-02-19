@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
 import Header from '@/components/Header'
+import { AuthContextProvider } from '@/context/AuthContext'
 
 import './globals.css'
 
@@ -20,10 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="flex min-h-screen flex-col items-center gap-5">
-          <Header />
-          <div className="flex justify-start">{children}</div>
-        </main>
+        <AuthContextProvider>
+          <main className="flex min-h-screen flex-col items-center gap-5">
+            <Header />
+            <div className="flex justify-start">{children}</div>
+          </main>
+        </AuthContextProvider>
       </body>
     </html>
   )

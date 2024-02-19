@@ -2,18 +2,25 @@
 
 import { useState } from 'react'
 
-import { useSetAtom } from 'jotai'
+import { getAuth } from 'firebase/auth'
+import { onAuthStateChanged } from 'firebase/auth'
+import { useAtom, useSetAtom } from 'jotai'
 import { useRouter } from 'next/navigation'
 
 import { authSignIn } from '@/firebase'
-import { userAtom } from '@/stores/userAtom'
-import { UserRoot } from '@/types/user'
+import { app } from '@/firebase'
+import { userAtom, userTokenAtom } from '@/stores/userAtom'
 
 const SignIn = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [token, setToken] = useAtom(userTokenAtom)
+
   const setUserAtom = useSetAtom(userAtom)
+
   const router = useRouter()
+
+  const auth = getAuth(app)
 
   const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value)
@@ -25,13 +32,23 @@ const SignIn = () => {
 
   const handleSignIn = () => {
     authSignIn({ email, password })
-      .then((user) => {
-        setUserAtom(user as unknown as UserRoot)
+      .then((res) => {
+        setUserAtom(res)
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            const uid = user.uid
+            setToken(uid)
+          }
+        })
         router.push('/')
       })
       .catch((error) => {
         console.log(error)
       })
+  }
+
+  const handleSignUp = () => {
+    router.push('/signup')
   }
 
   return (
@@ -59,7 +76,7 @@ const SignIn = () => {
         </div>
       </div>
       <div className="flex justify-center text-sm font-light text-gray-500 pt-[30px]">
-        <button>Sign Up</button>
+        <button onClick={handleSignUp}>Sign Up</button>
       </div>
       <div className="flex pt-[30px]">
         <button

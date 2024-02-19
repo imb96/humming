@@ -4,7 +4,7 @@ import { useAtom } from 'jotai'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
-import { userAtom } from '@/stores/userAtom'
+import { userTokenAtom } from '@/stores/userAtom'
 
 interface ProfileProps {
   profileImage?: string
@@ -12,13 +12,14 @@ interface ProfileProps {
 
 const Profile = ({ profileImage }: ProfileProps) => {
   const router = useRouter()
-  const user = useAtom(userAtom)
+
+  const [token, setToken] = useAtom(userTokenAtom)
 
   const handleProfileClick = () => {
-    if (!user[0]?.user.uid) {
+    if (!token) {
       router.push('/signin')
     } else {
-      router.push(`/user/${user[0]?.user.uid}`)
+      router.push(`/user/${token}`)
     }
   }
 

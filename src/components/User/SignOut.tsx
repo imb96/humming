@@ -9,7 +9,6 @@ import { userAtom, userTokenAtom } from '@/stores/userAtom'
 const SignOut = () => {
   const router = useRouter()
   const setUserAtom = useSetAtom(userAtom)
-
   const [token, setToken] = useAtom(userTokenAtom)
 
   const handleSignOut = () => {

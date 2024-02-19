@@ -1,10 +1,10 @@
 'use client'
 
-import { useAtom } from 'jotai'
+import { getAuth } from 'firebase/auth'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
-import { userTokenAtom } from '@/stores/userAtom'
+import { app } from '@/firebase'
 
 interface ProfileProps {
   profileImage?: string
@@ -12,14 +12,13 @@ interface ProfileProps {
 
 const Profile = ({ profileImage }: ProfileProps) => {
   const router = useRouter()
-
-  const [token, setToken] = useAtom(userTokenAtom)
+  const auth = getAuth(app)
 
   const handleProfileClick = () => {
-    if (!token) {
+    if (!auth.currentUser) {
       router.push('/signin')
     } else {
-      router.push(`/user/${token}`)
+      router.push(`/user/${auth.currentUser?.uid}`)
     }
   }
 

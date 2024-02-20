@@ -24,7 +24,9 @@ const SearchResult = () => {
     <div>
       <div className="flex gap-5">
         {tracks.length > 0 && <SongsList list={tracks} label={'Tracks'} />}
-        {songs.length > 0 && <SongsList list={songs} label={'Albums'} />}
+        <div className="hidden lg:block">
+          {songs.length > 0 && <SongsList list={songs} label={'Albums'} />}
+        </div>
       </div>
     </div>
   )

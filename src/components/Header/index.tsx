@@ -4,7 +4,7 @@ import Profile from '../User/Profile'
 
 const Header = () => {
   return (
-    <div className="top-0 sticky py-5 px-14 w-full flex justify-around items-center border-b-[1px]">
+    <div className="top-0 sticky py-5 px-14 w-full flex justify-center items-center border-b-[1px] gap-12">
       <Logo />
       <Search />
       <Profile />

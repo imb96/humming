@@ -5,7 +5,9 @@ export default function Home() {
   return (
     <div className="flex gap-5">
       <TopSongList />
-      <TopArtistList />
+      <div className="hidden lg:block">
+        <TopArtistList />
+      </div>
     </div>
   )
 }

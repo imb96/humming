@@ -23,8 +23,8 @@ const SearchResult = () => {
   return (
     <div>
       <div className="flex gap-5">
-        {songs.length > 0 && <SongsList list={songs} label={'Albums'} />}
         {tracks.length > 0 && <SongsList list={tracks} label={'Tracks'} />}
+        {songs.length > 0 && <SongsList list={songs} label={'Albums'} />}
       </div>
     </div>
   )

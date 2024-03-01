@@ -1,7 +1,7 @@
 import { Song } from '@/types/song'
 import { TopTracks } from '@/types/track'
 
-import SongCard from './SongCard'
+import Card from '../Card'
 
 const SongsList = ({
   list,
@@ -21,7 +21,7 @@ const SongsList = ({
           .filter((item) => item.name !== '(null)')
           .sort((a, b) => Number(b.listeners) - Number(a.listeners))
           .map((song, i) => (
-            <SongCard
+            <Card
               song={song}
               key={song.mbid ? song.mbid : Math.random() * 100 * i}
             />

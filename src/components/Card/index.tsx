@@ -2,17 +2,16 @@
 
 import { useState } from 'react'
 
-import Image from 'next/image'
-
 import getVideo from '@/api/getVideo'
+import { Artist } from '@/types/artist'
 import { Song } from '@/types/song'
 import { TopTracks } from '@/types/track'
 
-const SongCard = ({
+const Card = ({
   song,
   rank,
 }: {
-  song: Song | TopTracks
+  song: Song | TopTracks | Artist
   rank?: number
 }) => {
   const [isVideoOpen, setIsVideoOpen] = useState(false)
@@ -28,7 +27,7 @@ const SongCard = ({
     allowFullScreen: true,
   }
 
-  const handleSongCardClick = async () => {
+  const handleClick = async () => {
     setIsVideoOpen(!isVideoOpen)
     const res = await getVideo({ title: `${song.name} ${song.artist}` })
     setYtId(res.items[0].id.videoId)
@@ -38,24 +37,10 @@ const SongCard = ({
     <>
       <div
         className="p-2 flex flex-row justify-between cursor-pointer hover:bg-gray-100 flex-1 overflow-hidden items-center"
-        onClick={handleSongCardClick}
+        onClick={handleClick}
       >
-        <div className="flex flex-row gap-2 items-center">
-          {rank ? (
-            rank
-          ) : (
-            <Image
-              src={
-                song.image?.[0]['#text']
-                  ? song.image[0]['#text']
-                  : 'https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png'
-              }
-              alt="album image"
-              width={32}
-              height={32}
-            />
-          )}
-
+        <div className="flex flex-row gap-2 items-center truncate">
+          {rank}
           <div className="overflow-hidden whitespace-nowrap overflow-ellipsis">
             {song.name}
           </div>
@@ -73,4 +58,4 @@ const SongCard = ({
   )
 }
 
-export default SongCard
+export default Card

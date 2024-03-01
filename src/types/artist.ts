@@ -15,6 +15,7 @@ export interface Artist {
   url: string
   streamable: string
   image: Image[]
+  artist?: string
 }
 
 export interface Image {

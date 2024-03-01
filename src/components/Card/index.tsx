@@ -8,10 +8,10 @@ import { Song } from '@/types/song'
 import { TopTracks } from '@/types/track'
 
 const Card = ({
-  song,
+  item,
   rank,
 }: {
-  song: Song | TopTracks | Artist
+  item: Song | TopTracks | Artist
   rank?: number
 }) => {
   const [isVideoOpen, setIsVideoOpen] = useState(false)
@@ -29,7 +29,7 @@ const Card = ({
 
   const handleClick = async () => {
     setIsVideoOpen(!isVideoOpen)
-    const res = await getVideo({ title: `${song.name} ${song.artist}` })
+    const res = await getVideo({ title: `${item.name} ${item.artist}` })
     setYtId(res.items[0].id.videoId)
   }
 
@@ -42,11 +42,11 @@ const Card = ({
         <div className="flex flex-row gap-2 items-center truncate">
           {rank}
           <div className="overflow-hidden whitespace-nowrap overflow-ellipsis">
-            {song.name}
+            {item.name}
           </div>
         </div>
         <div className="text-[10px] overflow-hidden whitespace-nowrap overflow-ellipsis">
-          {song.artist}
+          {item.artist}
         </div>
       </div>
       {isVideoOpen && (

@@ -1,7 +1,7 @@
 import getChart from '@/api/getChart'
 import { Artist } from '@/types/artist'
 
-import ArtistCard from './ArtistCard'
+import Card from '../Card'
 
 const TopArtistList = async () => {
   const res = await getChart({ method: 'chart.gettopartists' })
@@ -26,8 +26,8 @@ const TopArtistList = async () => {
         {topArtists
           .filter((item: Artist) => item.name !== '(null)')
           .map((artist: Artist, i: number) => (
-            <ArtistCard
-              artist={artist}
+            <Card
+              song={artist}
               key={artist.mbid ? artist.mbid : Math.random() * 100 * i}
               rank={i + 1}
             />

@@ -85,7 +85,7 @@ const SearchInput = ({
         <select
           value={searchType}
           onChange={handleSelectChange}
-          className="text-xs"
+          className="text-xs md:block hidden"
           aria-label="search-type"
         >
           <option value="song">제목/가수</option>
@@ -93,7 +93,6 @@ const SearchInput = ({
         </select>
         <input
           type="text"
-          placeholder="Search your humming..."
           className="focus:outline-none text-xs w-[100%] pl-5"
           autoFocus
           onChange={(e) => setInput(e.target.value)}

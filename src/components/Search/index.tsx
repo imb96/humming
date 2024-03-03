@@ -8,7 +8,7 @@ const Search = () => {
   const [isLoading, setIsLoading] = useState(false)
   return (
     <div
-      className={`flex items-center w-[500px] focus-within:border-orange-400 border-[2px] rounded-full p-[8px] h-[50px] ${isLoading ? 'border-dotted' : 'border-solid'}`}
+      className={`flex items-center w-[500px] min-w-[140px] focus-within:border-orange-400 border-[2px] rounded-full p-[8px] h-[50px] ${isLoading ? 'border-dotted' : 'border-solid'}`}
     >
       <SearchInput setIsLoading={setIsLoading} />
     </div>

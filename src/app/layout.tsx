@@ -24,7 +24,6 @@ export default function RootLayout({
         <AuthContextProvider>
           <main className="flex min-h-screen flex-col items-center gap-5">
             <MusicPage>{children}</MusicPage>
-            {/*<div className="flex justify-start">{children}</div>*/}
           </main>
         </AuthContextProvider>
       </body>

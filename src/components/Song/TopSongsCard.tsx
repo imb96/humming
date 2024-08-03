@@ -3,7 +3,7 @@ import { TopTracks } from '@/types/track'
 
 import CardList from '../CardList'
 
-const TopTrackList = async () => {
+const TopSongsCard = async () => {
   const res = await getChart({ method: 'chart.gettoptracks' })
   const topTracks = res.tracks.track.map((track: TopTracks) => {
     return {
@@ -17,7 +17,7 @@ const TopTrackList = async () => {
     }
   })
 
-  return <CardList list={topTracks} label="Top Track 50 🚀" isRanked={true} />
+  return <CardList list={topTracks} label="Top Songs 50 🚀" isRanked={true} />
 }
 
-export default TopTrackList
+export default TopSongsCard

@@ -17,7 +17,7 @@ const TopSongsCard = async () => {
     }
   })
 
-  return <CardList list={topTracks} label="Top Track 50 🚀" isRanked={true} />
+  return <CardList list={topTracks} label="Top Songs 50 🚀" isRanked={true} />
 }
 
 export default TopSongsCard

@@ -20,7 +20,7 @@ interface SignUpProps {
   message: string
 }
 
-const SignUp: SubmitHandler<SignUpProps> = () => {
+const SignUp = () => {
   const { register, handleSubmit } = useForm<InputTypes>()
 
   const router = useRouter()

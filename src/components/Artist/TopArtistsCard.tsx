@@ -3,7 +3,7 @@ import { Artist } from '@/types/artist'
 
 import CardList from '../CardList'
 
-const TopArtistList = async () => {
+const TopArtistsCard = async () => {
   const res = await getChart({ method: 'chart.gettopartists' })
   const topArtists = res.artists.artist.map((artist: Artist) => {
     return {
@@ -21,4 +21,4 @@ const TopArtistList = async () => {
   )
 }
 
-export default TopArtistList
+export default TopArtistsCard

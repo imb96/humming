@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
-import Header from '@/components/Header'
+import MusicPage from '@/components/music-page'
 import { AuthContextProvider } from '@/context/AuthContext'
 
 import './globals.css'
@@ -23,8 +23,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthContextProvider>
           <main className="flex min-h-screen flex-col items-center gap-5">
-            <Header />
-            <div className="flex justify-start">{children}</div>
+            <MusicPage>{children}</MusicPage>
+            {/*<div className="flex justify-start">{children}</div>*/}
           </main>
         </AuthContextProvider>
       </body>

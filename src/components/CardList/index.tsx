@@ -4,7 +4,7 @@ import { TopTracks } from '@/types/track'
 import Card from '../Card'
 
 const CardList = ({
-  list,
+  list = [],
   label,
   isRanked = false,
 }: {

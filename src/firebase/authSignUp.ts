@@ -12,10 +12,9 @@ const authSignUp = async ({
   const auth = getAuth(app)
 
   try {
-    const user = await createUserWithEmailAndPassword(auth, email, password)
-    return user
+    return await createUserWithEmailAndPassword(auth, email, password)
   } catch (error) {
-    throw new Error('[authSignUp] Error')
+    throw new Error('[authSignUp] Error' + error)
   }
 }
 

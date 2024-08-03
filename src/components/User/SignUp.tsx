@@ -1,76 +1,82 @@
 'use client'
 
-import { useState } from 'react'
+import React from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { useRouter } from 'next/navigation'
 
 import { authSignUp } from '@/firebase'
 
+interface InputTypes {
+  email: string
+  password: string
+}
+
+interface SignUpProps {
+  email: Pick<InputTypes, 'email'>
+  password: Pick<InputTypes, 'password'>
+  success: boolean
+  failed: boolean
+  message: string
+}
+
 const SignUp = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const { register, handleSubmit } = useForm<InputTypes>()
 
   const router = useRouter()
 
-  const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value)
+  const handleSignIn = () => {
+    router.push('/signin')
   }
 
-  const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value)
-  }
-
-  const handleSignUp = () => {
-    authSignUp({ email, password })
+  const handleSignUp: SubmitHandler<InputTypes> = (data) => {
+    authSignUp({ email: data.email, password: data.password })
       .then(() => {
-        router.push('/')
+        router.push('/signin')
       })
       .catch((error) => {
         console.log(error)
       })
   }
 
-  const handleSignIn = () => {
-    router.push('/signin')
-  }
-
   return (
-    <div className="flex flex-col px-5 gap-2 pt-5 rounded p-[8px] min-w-[360px] h-[360px]">
-      <div className="flex justify-center pb-10 text-orange-500 font-bold text-2xl">
+    <form
+      className="flex h-[360px] min-w-[360px] flex-col gap-2 rounded p-[8px] px-5 pt-5"
+      onSubmit={handleSubmit(handleSignUp)}
+    >
+      <div className="flex justify-center pb-10 text-2xl font-bold text-orange-500">
         {'Humming'}
       </div>
       <div className="flex flex-col gap-5">
-        <div className="border-[1px] rounded">
+        <div className="rounded border-[1px]">
           <input
-            name="email"
-            placeholder="email"
-            onChange={handleChangeEmail}
-            className="p-3 focus:outline-orange-500 w-full"
+            {...register('email')}
+            placeholder={'example@humming.com'}
+            className="w-full p-3 focus:outline-orange-500"
           />
         </div>
-        <div className="border-[1px] rounded">
+        <div className="rounded border-[1px]">
           <input
-            name="password"
-            placeholder="password"
+            {...register('password')}
+            placeholder={'password'}
             type="password"
-            onChange={handleChangePassword}
-            className="p-3 focus:outline-orange-500 w-full"
+            className="w-full p-3 focus:outline-orange-500"
           />
         </div>
       </div>
-      <div className="flex justify-center text-sm font-light text-gray-500 pt-[30px]">
+      <div className="flex justify-center pt-[30px] text-sm font-light text-gray-500">
         <button onClick={handleSignIn}>Sign In</button>
       </div>
       <div className="flex pt-[30px]">
         <button
-          onClick={handleSignUp}
           aria-label="SignIn"
-          className="bg-orange-500 w-full h-[40px] rounded"
+          className="h-[40px] w-full rounded bg-orange-500"
+          type="submit"
         >
           Sign Up
         </button>
       </div>
-    </div>
+    </form>
   )
 }
 

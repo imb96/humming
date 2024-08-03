@@ -17,7 +17,9 @@ export function Sidebar({ className, playlists }: Readonly<SidebarProps>) {
       <div className="space-y-4 py-4">
         <div className="py-2">
           <h2 className="relative px-7 text-lg font-semibold tracking-tight">
-            <Button>Search</Button>
+            <Link href="/">
+              <Button>Home</Button>
+            </Link>
           </h2>
         </div>
         <div className="py-2">

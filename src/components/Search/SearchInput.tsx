@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import { useSetAtom } from 'jotai'
 import { SetStateAction } from 'jotai/vanilla'
@@ -9,6 +9,13 @@ import { useRouter } from 'next/navigation'
 import getAlbum from '@/api/getAlbum'
 import getTrack from '@/api/getTrack'
 import getTrackByLyrics from '@/api/getTrackByLyrics'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { songsAtom, tracksAtom } from '@/stores/songsAtom'
 import { Track } from '@/types/lyricsTrack'
 
@@ -26,8 +33,8 @@ const SearchInput = ({
   const setAlbumsAtomValue = useSetAtom(songsAtom)
   const setTracksAtom = useSetAtom(tracksAtom)
 
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSearchType(event.target.value)
+  const handleSelectChange = (value: string) => {
+    setSearchType(value)
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -80,20 +87,20 @@ const SearchInput = ({
     <>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-row px-2 justify-between w-full"
+        className="flex w-full flex-row justify-between px-2"
       >
-        <select
-          value={searchType}
-          onChange={handleSelectChange}
-          className="text-xs md:block hidden"
-          aria-label="search-type"
-        >
-          <option value="song">제목/가수</option>
-          <option value="lyrics">가사</option>
-        </select>
+        <Select value={searchType} onValueChange={handleSelectChange}>
+          <SelectTrigger className="w-[180px] border-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="song">제목/가수</SelectItem>
+            <SelectItem value="lyrics">가사</SelectItem>
+          </SelectContent>
+        </Select>
         <input
           type="text"
-          className="focus:outline-none text-xs w-[100%] pl-5"
+          className="w-[100%] pl-5 text-xs focus:outline-none"
           autoFocus
           onChange={(e) => setInput(e.target.value)}
         />

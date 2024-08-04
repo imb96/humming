@@ -11,17 +11,10 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   playlists: Playlist[]
 }
 
-export function Sidebar({ className, playlists }: Readonly<SidebarProps>) {
+export function Sidebar({ className }: Readonly<SidebarProps>) {
   return (
     <div className={cn('pb-12', className)}>
       <div className="space-y-4 py-4">
-        <div className="py-2">
-          <h2 className="relative px-7 text-lg font-semibold tracking-tight">
-            <Link href="/">
-              <Button>Home</Button>
-            </Link>
-          </h2>
-        </div>
         <div className="py-2">
           <h2 className="relative px-7 text-lg font-semibold tracking-tight">
             Playlists

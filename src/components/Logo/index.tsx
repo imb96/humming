@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 const Logo = () => {
@@ -12,9 +13,12 @@ const Logo = () => {
   return (
     <div
       onClick={handleLogoClick}
-      className="cursor-pointer text-orange-600 text-lg font-black"
+      className="flex cursor-pointer items-center justify-center text-lg font-black"
     >
-      Humming
+      <div>
+        <Image src="/hummingbird.png" alt="logo" width={24} height={24} />
+      </div>
+      <div>Humming</div>
     </div>
   )
 }

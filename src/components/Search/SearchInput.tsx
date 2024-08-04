@@ -3,7 +3,6 @@
 import React, { useState } from 'react'
 
 import { useSetAtom } from 'jotai'
-import { SetStateAction } from 'jotai/vanilla'
 import { useRouter } from 'next/navigation'
 
 import getAlbum from '@/api/getAlbum'
@@ -19,13 +18,10 @@ import {
 import { songsAtom, tracksAtom } from '@/stores/songsAtom'
 import { Track } from '@/types/lyricsTrack'
 
-import SearchButton from './SearchButton'
+import { Button } from '../ui/button'
+import { Input } from '../ui/input'
 
-const SearchInput = ({
-  setIsLoading,
-}: {
-  setIsLoading: React.Dispatch<SetStateAction<boolean>>
-}) => {
+const SearchInput = () => {
   const [input, setInput] = useState('')
   const [searchType, setSearchType] = useState('song')
   const router = useRouter()
@@ -39,7 +35,6 @@ const SearchInput = ({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    setIsLoading(true)
 
     if (searchType === 'song') {
       const albums = await getAlbum({
@@ -80,17 +75,16 @@ const SearchInput = ({
       setAlbumsAtomValue([])
     }
     router.push('/search')
-    setIsLoading(false)
   }
 
   return (
     <>
       <form
         onSubmit={handleSubmit}
-        className="flex w-full flex-row justify-between px-2"
+        className="flex w-full flex-row justify-between gap-5 px-2"
       >
         <Select value={searchType} onValueChange={handleSelectChange}>
-          <SelectTrigger className="w-[180px] border-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0">
+          <SelectTrigger className="w-[180px]">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -98,13 +92,13 @@ const SearchInput = ({
             <SelectItem value="lyrics">가사</SelectItem>
           </SelectContent>
         </Select>
-        <input
+        <Input
           type="text"
           className="w-[100%] pl-5 text-xs focus:outline-none"
           autoFocus
           onChange={(e) => setInput(e.target.value)}
         />
-        <SearchButton disabled={input.length < 2} />
+        <Button>검색</Button>
       </form>
     </>
   )

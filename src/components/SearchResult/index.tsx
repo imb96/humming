@@ -22,9 +22,11 @@ const SearchResult = () => {
 
   return (
     <div>
-      <div className="flex gap-5">
-        {tracks.length > 0 && <CardList list={tracks} label={'Songs'} />}
-        <div className="hidden lg:block">
+      <div className="flex flex-col gap-5 md:flex-row">
+        <div>
+          {tracks.length > 0 && <CardList list={tracks} label={'Songs'} />}
+        </div>
+        <div>
           {songs.length > 0 && <CardList list={songs} label={'Albums'} />}
         </div>
       </div>

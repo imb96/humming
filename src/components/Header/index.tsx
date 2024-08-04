@@ -1,13 +1,9 @@
-import Logo from '../Logo'
 import Search from '../Search'
-import Profile from '../User/Profile'
 
 const Header = () => {
   return (
-    <div className="top-0 sticky py-5 px-14 w-full flex justify-center items-center gap-12">
-      <Logo />
+    <div className="sticky top-0 flex w-full items-center justify-center gap-12 px-14 py-5">
       <Search />
-      <Profile />
     </div>
   )
 }

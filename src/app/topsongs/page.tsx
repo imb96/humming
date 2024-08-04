@@ -44,16 +44,16 @@ const TopSongsPage = async () => {
       <TableCaption>A list of top songs.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead>Artist</TableHead>
           <TableHead>Song</TableHead>
+          <TableHead>Artist</TableHead>
           <TableHead>Listeners</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {topTracks.map((track: TopTracks) => (
           <TableRow key={track.mbid}>
-            <TableCell>{track.artist}</TableCell>
             <TableCell>{track.name}</TableCell>
+            <TableCell>{track.artist}</TableCell>
             <TableCell>{track.listeners}</TableCell>
           </TableRow>
         ))}

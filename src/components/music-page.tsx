@@ -8,7 +8,7 @@ export default function MusicPage({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <div className="hidden md:block">
+    <div>
       <Menu />
       <div className="border-t">
         <div className="bg-background">

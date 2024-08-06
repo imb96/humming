@@ -1,3 +1,11 @@
+'use client'
+
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
+
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -10,7 +18,56 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
+const signInSchema = z.object({
+  email: z.string().email({ message: '이메일이 유효하지 않습니다.' }),
+  password: z
+    .string()
+    .min(8, { message: '비밀번호는 최소 8자 이상이어야 합니다.' }),
+})
+
+const signUpSchema = z
+  .object({
+    email: z.string().email({ message: '이메일이 유효하지 않습니다.' }),
+    password: z
+      .string()
+      .min(8, { message: '비밀번호는 최소 8자 이상이어야 합니다.' }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: '비밀번호가 다릅니다.',
+    path: ['confirmPassword'],
+  })
+
+type SignInFormValues = z.infer<typeof signInSchema>
+type SignUpFormValues = z.infer<typeof signUpSchema>
+
 const AccountPage = () => {
+  const [activeTab, setActiveTab] = useState<'signin' | 'signup'>('signin')
+
+  const {
+    register: registerSignIn,
+    handleSubmit: handleSubmitSignIn,
+    formState: { errors: errorSignIn },
+  } = useForm<SignInFormValues>({
+    resolver: zodResolver(signInSchema),
+  })
+
+  const {
+    register: registerSignUp,
+    handleSubmit: handleSubmitSignUp,
+    formState: { errors: errorSignUp },
+  } = useForm<SignUpFormValues>({
+    resolver: zodResolver(signUpSchema),
+  })
+
+  const onSignIn = (data: SignInFormValues) => {
+    console.log(data)
+  }
+
+  const onSignUp = (data: SignUpFormValues) => {
+    console.log(data)
+  }
+
   return (
     <div className="flex justify-center">
       <Tabs defaultValue="signin" className="w-[400px]">
@@ -23,23 +80,40 @@ const AccountPage = () => {
             <CardHeader>
               <CardTitle>Sign in</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="name">Email</Label>
-                <Input id="name" placeholder="geurim@humming.com" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="username">Password</Label>
-                <Input
-                  id="username"
-                  type="password"
-                  placeholder="***********"
-                />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Sign in</Button>
-            </CardFooter>
+            <form onSubmit={handleSubmitSignIn(onSignIn)}>
+              <CardContent className="space-y-2">
+                <div className="space-y-1">
+                  <Label htmlFor="signInEmail">Email</Label>
+                  <Input
+                    {...registerSignIn('email')}
+                    id="signInEmail"
+                    placeholder="geurim@humming.com"
+                  />
+                  {errorSignIn.email && (
+                    <p className="text-sm text-red-500">
+                      {errorSignIn.email.message}
+                    </p>
+                  )}
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="password">Password</Label>
+                  <Input
+                    {...registerSignIn('password')}
+                    id="username"
+                    type="password"
+                    placeholder="***********"
+                  />
+                  {errorSignIn.password && (
+                    <p className="text-sm text-red-500">
+                      {errorSignIn.password.message}
+                    </p>
+                  )}
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button type="submit">Sign in</Button>
+              </CardFooter>
+            </form>
           </Card>
         </TabsContent>
         <TabsContent value="signup">
@@ -47,27 +121,55 @@ const AccountPage = () => {
             <CardHeader>
               <CardTitle>Sign up</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="current">Email</Label>
-                <Input
-                  id="current"
-                  type="email"
-                  placeholder="geurim@humming.com"
-                />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="new">Password</Label>
-                <Input id="new" type="password" placeholder="***********" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="new">Password</Label>
-                <Input id="new" type="password" placeholder="***********" />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Sign up</Button>
-            </CardFooter>
+            <form onSubmit={handleSubmitSignUp(onSignUp)}>
+              <CardContent className="space-y-2">
+                <div className="space-y-1">
+                  <Label htmlFor="signUpEmail">Email</Label>
+                  <Input
+                    {...registerSignUp('email')}
+                    id="signUpEmail"
+                    type="email"
+                    placeholder="geurim@humming.com"
+                  />
+                  {errorSignUp.email && (
+                    <p className="text-sm text-red-500">
+                      {errorSignUp.email.message}
+                    </p>
+                  )}
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="password">Password</Label>
+                  <Input
+                    {...registerSignUp('password')}
+                    id="password"
+                    type="password"
+                    placeholder="***********"
+                  />
+                  {errorSignUp.password && (
+                    <p className="text-sm text-red-500">
+                      {errorSignUp.password.message}
+                    </p>
+                  )}
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+                  <Input
+                    {...registerSignUp('confirmPassword')}
+                    id="confirmPassword"
+                    type="password"
+                    placeholder="***********"
+                  />
+                  {errorSignUp.confirmPassword && (
+                    <p className="text-sm text-red-500">
+                      {errorSignUp.confirmPassword.message}
+                    </p>
+                  )}
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button type="submit">Sign up</Button>
+              </CardFooter>
+            </form>
           </Card>
         </TabsContent>
       </Tabs>

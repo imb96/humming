@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 import * as z from 'zod'
 
 import { Button } from '@/components/ui/button'
@@ -17,6 +18,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { authSignIn, authSignUp } from '@/firebase'
 
 const signInSchema = z.object({
   email: z.string().email({ message: '이메일이 유효하지 않습니다.' }),
@@ -43,6 +45,7 @@ type SignUpFormValues = z.infer<typeof signUpSchema>
 
 const AccountPage = () => {
   const [activeTab, setActiveTab] = useState<'signin' | 'signup'>('signin')
+  const router = useRouter()
 
   const {
     register: registerSignIn,
@@ -62,10 +65,24 @@ const AccountPage = () => {
 
   const onSignIn = (data: SignInFormValues) => {
     console.log(data)
+    authSignIn({ email: data.email, password: data.password })
+      .then(() => {
+        router.push('/')
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   const onSignUp = (data: SignUpFormValues) => {
     console.log(data)
+    authSignUp({ email: data.email, password: data.password })
+      .then(() => {
+        router.refresh()
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   return (

@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { onAuthStateChanged } from 'firebase/auth'
 import { useRouter } from 'next/navigation'
 import * as z from 'zod'
 
@@ -18,6 +19,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { auth } from '@/firebase'
 import { authSignIn, authSignUp } from '@/firebase'
 
 const signInSchema = z.object({
@@ -46,6 +48,16 @@ type SignUpFormValues = z.infer<typeof signUpSchema>
 const AccountPage = () => {
   const [activeTab, setActiveTab] = useState<'signin' | 'signup'>('signin')
   const router = useRouter()
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        router.push(`/account/${user.uid}`)
+      }
+    })
+
+    return () => unsubscribe()
+  }, [router])
 
   const {
     register: registerSignIn,

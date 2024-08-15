@@ -1,4 +1,5 @@
 import { getApps, initializeApp } from 'firebase/app'
+import { getAuth } from 'firebase/auth'
 import { getDatabase } from 'firebase/database'
 
 import authSignIn from './authSignIn'
@@ -22,4 +23,6 @@ const app =
 
 const database = getDatabase(app)
 
-export { app, database, authSignUp, authSignIn, authSignOut }
+const auth = getAuth(app)
+
+export { app, database, authSignUp, authSignIn, authSignOut, auth }

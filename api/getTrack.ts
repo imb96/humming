@@ -1,22 +1,28 @@
-import { BASE_URL_LAST } from './baseUrl'
+import { SHAZAM_BASE_URL } from './baseUrl'
 
-interface GetTrackProps {
-  method: string
-  track: string
+type GetTrackParams = {
+  name: string
+  offset: number
 }
 
-const getTrack = async (params: GetTrackProps) => {
-  const url = `${BASE_URL_LAST}&method=${params.method}&track=${params.track}&limit=50`
+const getTrack = async ({ name, offset }: GetTrackParams) => {
+  const url = `${SHAZAM_BASE_URL}/search?term=${name}&locale=en-US&offset=${offset}&limit=5`
+
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json',
+  }
+
+  if (process.env.NEXT_PUBLIC_SHAZAM_API_KEY) {
+    headers['X-RapidAPI-Key'] = process.env.NEXT_PUBLIC_SHAZAM_API_KEY
+  }
 
   const res = await fetch(url, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
   })
 
   if (!res.ok) {
-    throw new Error('[getTrack] api Failed to fetch data')
+    throw new Error('GET: [getTrack] api Failed to fetch data')
   }
 
   const data = await res.json()

@@ -7,6 +7,11 @@ const nextConfig = {
         hostname: 'lastfm.freetls.fastly.net',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'is1-ssl.mzstatic.com',
+        port: '',
+      },
     ],
   },
   async rewrites() {

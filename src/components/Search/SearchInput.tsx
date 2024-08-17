@@ -2,105 +2,132 @@
 
 import React, { useState } from 'react'
 
-import { useSetAtom } from 'jotai'
-import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
-import getAlbum from '@/api/getAlbum'
 import getTrack from '@/api/getTrack'
-import getTrackByLyrics from '@/api/getTrackByLyrics'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { songsAtom, tracksAtom } from '@/stores/songsAtom'
-import { Track } from '@/types/lyricsTrack'
 
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../ui/table'
+
+type Track = {
+  track: {
+    key: string
+    title: string
+    subtitle: string
+    images: {
+      background: string
+    }
+  }
+}
 
 const SearchInput = () => {
   const [input, setInput] = useState('')
-  const [searchType, setSearchType] = useState('song')
-  const router = useRouter()
+  const [tracks, setTracks] = useState<Track[]>([])
+  const [offset, setOffset] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
 
-  const setAlbumsAtomValue = useSetAtom(songsAtom)
-  const setTracksAtom = useSetAtom(tracksAtom)
+  const fetchTracks = async (
+    searchTerm: string,
+    currentOffset: number,
+    isInitialSearch = false,
+  ) => {
+    setIsLoading(true)
+    try {
+      const res = await getTrack({
+        name: searchTerm,
+        offset: currentOffset,
+      })
 
-  const handleSelectChange = (value: string) => {
-    setSearchType(value)
+      if (res && res.tracks && res.tracks.hits) {
+        if (isInitialSearch) {
+          setTracks(res.tracks.hits)
+        } else {
+          setTracks((prevTracks) => [...prevTracks, ...res.tracks.hits])
+        }
+        setOffset(currentOffset + res.tracks.hits.length)
+      }
+    } catch (error) {
+      console.error('Error fetching tracks:', error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setOffset(0) // Reset offset for new search
+    await fetchTracks(input, 0, true)
+  }
 
-    if (searchType === 'song') {
-      const albums = await getAlbum({
-        method: 'album.search',
-        album: input,
-      })
-
-      const tracks = await getTrack({
-        method: 'track.search',
-        track: input,
-      })
-
-      if (albums.results.albummatches) {
-        setAlbumsAtomValue(albums.results.albummatches.album)
-      }
-
-      if (tracks.results.trackmatches) {
-        setTracksAtom(tracks.results.trackmatches.track)
-      }
-    }
-
-    if (searchType === 'lyrics') {
-      const song = await getTrackByLyrics(input)
-      const tracksWithLyric = song.message.body.track_list.map(
-        ({ track }: { track: Track }) => {
-          return {
-            image: [{ size: '', '#test': '' }],
-            listeners: '',
-            mbid: track.commontrack_id,
-            name: track.track_name,
-            streamable: '',
-            url: '',
-            artist: track.artist_name,
-          }
-        },
-      )
-      setTracksAtom(tracksWithLyric)
-      setAlbumsAtomValue([])
-    }
-    router.push('/search')
+  const handleLoadMore = async () => {
+    await fetchTracks(input, offset)
   }
 
   return (
-    <>
+    <div className="flex flex-col gap-5">
       <form
         onSubmit={handleSubmit}
         className="flex w-full flex-row justify-between gap-5 px-2"
       >
-        <Select value={searchType} onValueChange={handleSelectChange}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="song">제목/가수</SelectItem>
-            <SelectItem value="lyrics">가사</SelectItem>
-          </SelectContent>
-        </Select>
         <Input
           type="text"
           className="w-[100%] pl-5 text-xs focus:outline-none"
           autoFocus
           onChange={(e) => setInput(e.target.value)}
         />
-        <Button>검색</Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? 'Searching...' : 'Search'}
+        </Button>
       </form>
-    </>
+      <div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>No</TableHead>
+              <TableHead>Title</TableHead>
+              <TableHead>Artist</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {tracks.map((track, idx) => (
+              <TableRow key={track.track.key}>
+                <TableCell>{idx + 1}</TableCell>
+                <TableCell>
+                  <div className="flex gap-2">
+                    <Image
+                      src={track.track.images.background}
+                      alt="bgc"
+                      width={20}
+                      height={20}
+                      unoptimized
+                    />
+                    <div>{track.track.title}</div>
+                  </div>
+                </TableCell>
+                <TableCell>{track.track.subtitle}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        {tracks.length > 0 && (
+          <Button
+            onClick={handleLoadMore}
+            className="mt-4 w-full"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Loading...' : 'Load More'}
+          </Button>
+        )}
+      </div>
+    </div>
   )
 }
 

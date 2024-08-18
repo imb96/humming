@@ -23,8 +23,8 @@ type Track = {
     key: string
     title: string
     subtitle: string
-    images: {
-      background: string
+    share: {
+      image: string
     }
   }
 }
@@ -105,7 +105,7 @@ const SearchInput = () => {
                 <TableCell>
                   <div className="flex gap-2">
                     <Image
-                      src={track.track.images.background}
+                      src={track.track.share.image}
                       alt="bgc"
                       width={20}
                       height={20}
@@ -119,7 +119,7 @@ const SearchInput = () => {
                   <TrackDetailDialog
                     title={track.track.title}
                     artist={track.track.subtitle}
-                    image={track.track.images.background}
+                    image={track.track.share.image}
                     trackKey={track.track.key}
                   />
                 </TableCell>

@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 
 import getTrack from '@/api/getTrack'
+import TrackDetailDialog from '@/components/TrackDetailDialog'
 
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
@@ -63,7 +64,7 @@ const SearchInput = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    setOffset(0) // Reset offset for new search
+    setOffset(0)
     await fetchTracks(input, 0, true)
   }
 
@@ -94,6 +95,7 @@ const SearchInput = () => {
               <TableHead>No</TableHead>
               <TableHead>Title</TableHead>
               <TableHead>Artist</TableHead>
+              <TableHead>More</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -113,6 +115,14 @@ const SearchInput = () => {
                   </div>
                 </TableCell>
                 <TableCell>{track.track.subtitle}</TableCell>
+                <TableCell>
+                  <TrackDetailDialog
+                    title={track.track.title}
+                    artist={track.track.subtitle}
+                    image={track.track.images.background}
+                    trackKey={track.track.key}
+                  />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

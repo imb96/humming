@@ -1,12 +1,11 @@
-import { SHAZAM_BASE_URL } from './baseUrl'
+import { GENIUS_BASE_URL } from './baseUrl'
 
-type GetTrackParams = {
-  name: string
-  offset: number
+type GetLyricsProps = {
+  id: string
 }
 
-const getTrack = async ({ name, offset }: GetTrackParams) => {
-  const url = `${SHAZAM_BASE_URL}/search?term=${name}&locale=en-US&offset=${offset}&limit=5`
+const getLyrics = async ({ id }: GetLyricsProps) => {
+  const url = `${GENIUS_BASE_URL}/song/lyrics/?id=${id}`
 
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
@@ -29,4 +28,4 @@ const getTrack = async ({ name, offset }: GetTrackParams) => {
   return data
 }
 
-export default getTrack
+export default getLyrics

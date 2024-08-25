@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
 import MusicPage from '@/components/music-page'
+import { Toaster } from '@/components/ui/toaster'
 import { AuthContextProvider } from '@/context/AuthContext'
 
 import './globals.css'
@@ -30,6 +31,7 @@ export default function RootLayout({
           <main className="flex min-h-screen flex-col items-center gap-5">
             <MusicPage>{children}</MusicPage>
           </main>
+          <Toaster />
         </AuthContextProvider>
       </body>
     </html>

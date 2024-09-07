@@ -109,7 +109,7 @@ const SearchInput = () => {
                       alt="bgc"
                       width={20}
                       height={20}
-                      unoptimized
+                      className="hidden sm:block"
                     />
                     <div>{track.track.title}</div>
                   </div>

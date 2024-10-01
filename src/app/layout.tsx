@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google'
 
 import MusicPage from '@/components/music-page'
 import { Toaster } from '@/components/ui/toaster'
-import { AuthContextProvider } from '@/context/AuthContext'
+import SupabaseProvider from '@/context/SupabaseProvider'
 
 import './globals.css'
 
@@ -27,12 +27,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthContextProvider>
+        <SupabaseProvider>
           <main className="flex min-h-screen flex-col items-center gap-5">
             <MusicPage>{children}</MusicPage>
           </main>
           <Toaster />
-        </AuthContextProvider>
+        </SupabaseProvider>
       </body>
     </html>
   )

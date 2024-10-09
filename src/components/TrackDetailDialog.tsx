@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import getVideo from '@/api/getVideo'
+import { getVideo } from '@/api/getVideo'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,

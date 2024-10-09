@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import getVideo from '@/api/getVideo'
+import { getVideo } from '@/api/getVideo'
 import { Artist } from '@/types/artist'
 import { Song } from '@/types/song'
 import { TopTracks } from '@/types/track'
@@ -36,16 +36,16 @@ const Card = ({
   return (
     <>
       <div
-        className="p-2 flex flex-row justify-between cursor-pointer hover:bg-gray-100 flex-1 overflow-hidden items-center"
+        className="flex flex-1 cursor-pointer flex-row items-center justify-between overflow-hidden p-2 hover:bg-gray-100"
         onClick={handleClick}
       >
-        <div className="flex flex-row gap-2 items-center truncate">
+        <div className="flex flex-row items-center gap-2 truncate">
           {rank}
-          <div className="overflow-hidden whitespace-nowrap overflow-ellipsis">
+          <div className="overflow-hidden overflow-ellipsis whitespace-nowrap">
             {item.name}
           </div>
         </div>
-        <div className="text-[10px] overflow-hidden whitespace-nowrap overflow-ellipsis">
+        <div className="overflow-hidden overflow-ellipsis whitespace-nowrap text-[10px]">
           {item.artist}
         </div>
       </div>

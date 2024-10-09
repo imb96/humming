@@ -1,4 +1,4 @@
-import getChart from '@/api/getChart'
+import { getChart } from '@/actions/getChart'
 import {
   Table,
   TableBody,

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import getVideo from '@/api/getVideo'
+import { getVideo } from '@/api/getVideo'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -57,7 +57,9 @@ const TrackDetailDialog = ({
           backgroundPosition: 'center',
         }}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+        {isVideoOpen ? (
+          <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+        ) : null}
         <div className="relative z-10">
           <DialogHeader>
             <div className="flex flex-row gap-2">

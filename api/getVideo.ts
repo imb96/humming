@@ -4,7 +4,7 @@ interface GetVideoParams {
   title: string
 }
 
-const getVideo = async (params: GetVideoParams) => {
+export async function getVideo(params: GetVideoParams) {
   const url = `${BASE_URL_YT}&q=${params.title}`
 
   const res = await fetch(url, {
@@ -21,5 +21,3 @@ const getVideo = async (params: GetVideoParams) => {
   const data = await res.json()
   return data
 }
-
-export default getVideo

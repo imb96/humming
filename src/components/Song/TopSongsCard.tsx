@@ -1,4 +1,4 @@
-import getChart from '@/api/getChart'
+import { getChart } from '@/actions/getChart'
 import { TopTracks } from '@/types/track'
 
 import CardList from '../CardList'

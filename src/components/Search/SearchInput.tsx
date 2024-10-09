@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 
 import Image from 'next/image'
 
-import getTrack from '@/api/getTrack'
+import { getTrack } from '@/actions/getTrack'
 import TrackDetailDialog from '@/components/TrackDetailDialog'
 
 import { Button } from '../ui/button'
